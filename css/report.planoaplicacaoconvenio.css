@@ -1,0 +1,49 @@
+table td{
+  padding-top: 4px;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  font-size: 7pt;
+}
+.table-titulo th {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-weight: bold;
+  font-size: 8pt;
+  text-align: center;
+  padding-top: 4px;
+}
+.table-titulo{
+  margin-top: 15px; 
+}
+.subtitulo td {
+  background-color: rgb(170, 168, 168);
+  font-weight: bold;
+}
+.tbrepasse{
+  margin-bottom: 15px;
+}
+.itemdespesa .text-ident {
+  padding-left: 15px;
+}
+table .planoaplicacao td {
+  background-color: rgb(219, 219, 219);
+}
+.column-text {
+  width: 50%;
+}
+.column-value {
+  width: 25%;
+}
+.valor {
+  text-align: right;
+  padding-right: 2px;
+}
+.text-center{
+  text-align: center;
+}
+.first-column{
+  border-left: 1px solid black;
+}
+.first-row td{
+  border-top: 1px solid black;
+}
