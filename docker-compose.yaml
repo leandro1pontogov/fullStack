@@ -1,0 +1,13 @@
+name: projeto_completo
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_php
+    ports:
+      - "88:80"
+    volumes:
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/99-xdebug.ini
+      - ./:/var/www/html/

@@ -52,19 +52,88 @@
       height: 100% !important;
       overflow: hidden !important;
     }
+
+    #splConsulta #splHeader {
+      background-color: #e0ecff;
+      position: absolute;
+    }
+
+    #BarAcoes {
+      position: relative;
+      width: 100%;
+      bottom: 0px;
+    }
+
+    #splConsulta #splHeader .k-bg-blue.screen-filter-content {
+      max-height: 58px;
+      overflow: auto;
+    }
+
+    #splConsulta #splFooter {
+      height: inherit;
+    }
+
+    #splConsulta #splFooter>div:nth-child(1) {
+      height: inherit;
+      overflow: hidden;
+    }
+
+    #splConsulta #splFooter>div:nth-child(1) .k-tabstrip-wrapper>div {
+      height: inherit;
+      overflow: hidden;
+    }
+
+    #bottonConsultaAvaliacaoPrestacaoConta .k-tabstrip-wrapper {
+      height: inherit;
+    }
+
+    .k-item.k-state-default {
+      z-index: 0;
+    }
+
+    .k-form {
+      height: 99%;
+    }
+
+    .k-form>form {
+      height: 100%;
+    }
+
+    .k-form #splConsulta {
+      height: inherit;
+    }
+
+    .k-form #splConsulta #splMiddle {
+      overflow: hidden;
+    }
+
+    .k-header-column-menu.k-state-active {
+      z-index: 0;
+    }
+
+    #splConsulta #splMiddle>div {
+      height: 100% !important;
+    }
+
+    .k-splitter {
+      border-width: 0px !important;
+    }
+
+    .k-i-hbar {
+      margin-top: 2px !important;
+      height: 2px !important;
+    }
   </style>
 
   <script>
-    /**
-     * Fun��o para abrir janela - sobrescrita do `OpenWindow` original usado no sistema (Esta � apenas usada para treinamento)
-     **/
-    function OpenWindow(blModal, nmJanela, dsTitulo = '') {
+
+    function OpenWindow(blModal, nmJanela, dsUrlController, dsTitulo = '') {
       $("#DivWindowArea").append('<div id="Win' + nmJanela + '"></div>');
 
       $('#Win' + nmJanela).kendoWindow({
         title: dsTitulo,
         modal: blModal,
-        content: "./view/viw" + nmJanela + ".html",
+        content: dsUrlController,
         height: blModal ? "auto" : $("#DivWindowArea").height() - 26,
         width: blModal ? "800px" : "99.6%",
         visible: !blModal,
@@ -82,6 +151,7 @@
 
   <script>
     $(function () {
+      kendo.culture("pt-BR")
       $("#menu").kendoMenu({
         dataSource: [
           {
@@ -90,7 +160,8 @@
               {
                 text: "Janela de Teste",
                 select: function () {
-                  OpenWindow(false, "ConsultaTeste", "Janela de Teste")
+                  OpenWindow(false, "ConsultaSala", "../controller/ctrSala.php?action=winConsulta", "Janela Consulta Sala")
+      
                 }
               }
             ]
@@ -99,6 +170,7 @@
       });
     });
   </script>
+
 </head>
 
 <body>
@@ -109,6 +181,7 @@
   </div>
 
   <div id="popNotificacao"></div>
+  <div id="app"></div>
 </body>
 
 </html>
