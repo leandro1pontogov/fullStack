@@ -125,7 +125,7 @@
 							group: "actions",
 							attributes: { tabindex: "30" },
 							click: function () {
-								OpenWindow(true, "CadastroSala", "controller/ctrSala.php?action=incluir", "Janela Cadastro Sala")
+								OpenWindow(true, "CadastroSala", "controller/sala/ctrSala.php?action=incluir", "Janela Cadastro Sala")
 							}
 						},
 						{
@@ -140,7 +140,7 @@
 								let grid = $("#GrdConsultaSala").data("kendoGrid")
 								let SalaSelecionado = grid.dataItem(grid.select())
 
-								OpenWindow(true, "CadastroSala", "controller/ctrSala.php?action=editar&idSala=" + SalaSelecionado.idsala, "Janela Cadastro Sala")
+								OpenWindow(true, "CadastroSala", "controller/sala/ctrSala.php?action=editar&idSala=" + SalaSelecionado.idsala, "Janela Cadastro Sala")
 							}
 						},
 						{
@@ -178,7 +178,7 @@
 			serverSorting: true,
 			transport: {
 				read: {
-					url: "controller/ctrSala.php",
+					url: "controller/sala/ctrSala.php",
 					type: "GET",
 					dataType: "json",
 					data: function(){
@@ -191,6 +191,7 @@
 			},
 			schema: {
 				data: "jsnSala",
+				total: "jsnTotal",
 				model:{
 					fields: getModelDataSource(arrDataSource)
 				},

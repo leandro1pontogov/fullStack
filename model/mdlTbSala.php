@@ -25,6 +25,7 @@ class TbSala{
 
   public function LoadObject($resSet){
     $objTbSala = new TbSala();
+    $fmt = new Format();
 
     $objTbSala->Set("idsala", $resSet["idsala"]);
     $objTbSala->Set("nmsala", $resSet["nmsala"]);
@@ -32,11 +33,16 @@ class TbSala{
     $objTbSala->Set("nrcapacidade", $resSet["nrcapacidade"]);
     $objTbSala->Set("txrecursosdisponiveis", $resSet["txrecursosdisponiveis"]);
 
+    if(!isset($GLOBALS["_intTotalSala"])){
+      $GLOBALS["_intTotalSala"] = $resSet["_inttotal"];
+    }
+
     return $objTbSala;
   }
 
   public function Insert($objTbSala){
     $dtbServer = new DtbServer();
+    $fmt = new Format();
 
     $dsSql = "INSERT INTO
                 shtreinamento.tbsala(
@@ -48,10 +54,10 @@ class TbSala{
                 )
                 VALUES(
                 (SELECT NEXTVAL('shtreinamento.sqidsala')),
-                '".$objTbSala->Get("nmsala") ."',
-                '".$objTbSala->Get("dslocalizacao") ."',
+                '".$fmt->escSqlQuotes($objTbSala->Get("nmsala")) ."',
+                '".$fmt->escSqlQuotes($objTbSala->Get("dslocalizacao")) ."',
                 '".$objTbSala->Get("nrcapacidade") ."',
-                '".$objTbSala->Get("txrecursosdisponiveis") ."'
+                ".$fmt->NullString($fmt->escSqlQuotes($objTbSala->Get("txrecursosdisponiveis"))) ."
                 );";
 
     if(!$dtbServer->Exec($dsSql)){
@@ -64,15 +70,16 @@ class TbSala{
 
   public function Update($objTbSala){
     $dtbServer = new DtbServer();
+    $fmt = new Format();
 
     $dsSql = "UPDATE 
                 shtreinamento.tbsala
                 SET
                   idsala = ".$objTbSala->Get("idsala") .",
-                  nmsala = ".$objTbSala->Get("nmsala") .", 
-                  dslocalizacao = ".$objTbSala->Get("dslocalizacao") .", 
+                  nmsala = '".$fmt->escSqlQuotes($objTbSala->Get("nmsala")) ."', 
+                  dslocalizacao = '".$fmt->escSqlQuotes($objTbSala->Get("dslocalizacao")) ."', 
                   nrcapacidade = ".$objTbSala->Get("nrcapacidade") .", 
-                  txrecursosdisponiveis = ".$objTbSala->Get("txrecursosdisponiveis") ."
+                  txrecursosdisponiveis = ".$fmt->NullString($fmt->escSqlQuotes($objTbSala->Get("txrecursosdisponiveis"))) ."
                 WHERE
                   idsala = ".$objTbSala->Get("idsala") .";";
                   
@@ -121,7 +128,10 @@ class TbSala{
     $dtbServer = new DtbServer();
     $objTbSala = new TbSala();
 
-    $dsSql = "SELECT * FROM
+    $dsSql = "SELECT
+               *,
+               COUNT(*) OVER() _inttotal 
+              FROM
                 shtreinamento.tbsala
               WHERE
                 1 = 1";

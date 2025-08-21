@@ -160,7 +160,7 @@
               {
                 text: "Janela de Teste",
                 select: function () {
-                  OpenWindow(false, "ConsultaSala", "../controller/ctrSala.php?action=winConsulta", "Janela Consulta Sala")
+                  OpenWindow(false, "ConsultaSala", "controller/sala/ctrSala.php?action=winConsulta", "Janela Consulta Sala")
       
                 }
               }
