@@ -25,7 +25,6 @@ class TbSala{
 
   public function LoadObject($resSet){
     $objTbSala = new TbSala();
-    $fmt = new Format();
 
     $objTbSala->Set("idsala", $resSet["idsala"]);
     $objTbSala->Set("nmsala", $resSet["nmsala"]);

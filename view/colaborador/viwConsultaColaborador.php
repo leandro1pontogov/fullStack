@@ -7,7 +7,7 @@
 		
 		var arrDataSource = [
 			{
-				name: "idsala",
+				name: "idcolaboradorsala",
 				type: "integer",
 				label: "Id",
 				visibleFilter: 'true',
@@ -25,7 +25,7 @@
 				positionPreview: '1',
 			},
 			{
-				name: "nmsala",
+				name: "nmcolaboradorsala",
 				type: "string",
 				label: "Nome",
 				visibleFilter: 'true',
@@ -43,9 +43,9 @@
 				positionPreview: '2',
 			},
 			{
-				name: "dslocalizacao",
+				name: "dsemail",
 				type: "string",
-				label: "Localizacao",
+				label: "Email",
 				visibleFilter: 'true',
 				orderFilter: '4',
 
@@ -61,27 +61,9 @@
 				positionPreview: '3',
 			},
 			{
-				name: "nrcapacidade",
-				type: "integer",
-				label: "Capacidade",
-				visibleFilter: 'true',
-				orderFilter: '5',
-
-				orderGrid: '4',
-				widthGrid: '200',
-				hiddenGrid: 'false',
-				headerAttributesGrid: 'text-align: center;',
-				attributesGrid: 'text-align: center;',
-
-				showPreview: 'true',
-				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '300',
-				positionPreview: '4'
-			},
-			{
-				name: "txrecursosdisponiveis",
+				name: "dssetor",
 				type: "string",
-				label: "Recursos Disponiveis",
+				label: "Setor",
 				visibleFilter: 'true',
 				orderFilter: '6',
 
@@ -101,20 +83,20 @@
 		//----------------------------------------------------------------------------------------------------------------//
 		//Configura tela para utilizar o Splitter
 		//----------------------------------------------------------------------------------------------------------------//
-		arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaSala");
+		arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaColaborador");
 		//----------------------------------------------------------------------------------------------------------------//
 
 		
 		//----------------------------------------------------------------------------------------------------------------//
 		//Instanciando os campos combo da pesquisa
 		//----------------------------------------------------------------------------------------------------------------//
-		createPgFilter(arrDataSource, "ConsultaSala");
+		createPgFilter(arrDataSource, "ConsultaColaborador");
 		//----------------------------------------------------------------------------------------------------------------//
 
 		//----------------------------------------------------------------------------------------------------------------//
 		//Área de botões de ações
 		//----------------------------------------------------------------------------------------------------------------//
-		$("#frmConsultaSala #BarAcoes").kendoToolBar({
+		$("#frmConsultaColaborador #BarAcoes").kendoToolBar({
 			items: [
 				{
 					type: "spacer"
@@ -129,7 +111,7 @@
 							group: "actions",
 							attributes: { tabindex: "30" },
 							click: function () {
-								OpenWindow(true, "CadastroSala", "controller/sala/ctrSala.php?action=incluir", "Janela Cadastro Sala")
+								OpenWindow(true, "CadastroColaborador", "controller/colaborador/ctrColaborador.php?action=incluir", "Janela Cadastro Colaborador")
 							}
 						},
 						{
@@ -141,10 +123,10 @@
 							attributes: { tabindex: "31" },
 							click: function () {
 
-								let grid = $("#GrdConsultaSala").data("kendoGrid")
-								let SalaSelecionado = grid.dataItem(grid.select())
+								let grid = $("#GrdConsultaColaborador").data("kendoGrid")
+								let ColaboradorSelecionado = grid.dataItem(grid.select())
 
-								OpenWindow(true, "CadastroSala", "controller/sala/ctrSala.php?action=editar&idSala=" + SalaSelecionado.idsala, "Janela Cadastro Sala")
+								OpenWindow(true, "CadastroColaborador", "controller/colaborador/ctrColaborador.php?action=editar&idColaborador=" + ColaboradorSelecionado.idcolaboradorsala, "Janela Cadastro Colaborador")
 							}
 						},
 						{
@@ -154,7 +136,7 @@
 							group: "actions",
 							attributes: { tabindex: "32" },
 							click: function () {
-								$("#WinConsultaSala").data("kendoWindow").close();
+								$("#WinConsultaColaborador").data("kendoWindow").close();
 							}
 						},
 					]
@@ -167,7 +149,7 @@
 		//Filtro extra da consulta
 		//----------------------------------------------------------------------------------------------------------------//
 		function getExtraFilter(){
-			let arrFilds = LoadFilterSplitter("ConsultaSala", arrDataSource)
+			let arrFilds = LoadFilterSplitter("ConsultaColaborador", arrDataSource)
 			return arrFilds;
 		}
 		//----------------------------------------------------------------------------------------------------------------//
@@ -175,26 +157,26 @@
 		//----------------------------------------------------------------------------------------------------------------//
 		//Instanciando o DataSource na consulta
 		//----------------------------------------------------------------------------------------------------------------//
-		let DtsConsultaSala = new kendo.data.DataSource({
+		let DtsConsultaColaborador = new kendo.data.DataSource({
 			pageSize: 100,
 			serverPaging: true,
 			serverFiltering: true,
 			serverSorting: true,
 			transport: {
 				read: {
-					url: "controller/sala/ctrSala.php",
+					url: "controller/colaborador/ctrColaborador.php",
 					type: "GET",
 					dataType: "json",
 					data: function(){
 						return {
-							action: "ListSala",
+							action: "ListColaborador",
 							filters: getExtraFilter()
 						}					
 					}
 				}
 			},
 			schema: {
-				data: "jsnSala",
+				data: "jsnColaborador",
 				total: "jsnTotal",
 				model:{
 					fields: getModelDataSource(arrDataSource)
@@ -207,10 +189,10 @@
 		//----------------------------------------------------------------------------------------------------------------//
 		//Instanciando o botão de consulta
 		//----------------------------------------------------------------------------------------------------------------//
-		$("#frmConsultaSala #BtnPesquisar").kendoButton({
+		$("#frmConsultaColaborador #BtnPesquisar").kendoButton({
 			click: function(){
-				DtsConsultaSala.filter(getExtraFilter())
-				DtsConsultaSala.read()
+				DtsConsultaColaborador.filter(getExtraFilter())
+				DtsConsultaColaborador.read()
 			}
 		})
 		//----------------------------------------------------------------------------------------------------------------//
@@ -218,13 +200,13 @@
 		//----------------------------------------------------------------------------------------------------------------//
 		//Instanciando o Grid na consulta
 		//----------------------------------------------------------------------------------------------------------------//
-		$("#frmConsultaSala #GrdConsultaSala").kendoGrid({
-			pdf: SetPdfOptions("Listagem de Salas"),
+		$("#frmConsultaColaborador #GrdConsultaColaborador").kendoGrid({
+			pdf: SetPdfOptions("Listagem de Colaboradores"),
 			pdfExport: function () {
-				tituloPdfExport = "Listagem de Salas"
+				tituloPdfExport = "Listagem de Colaboradores"
 			},
-			dataSource: DtsConsultaSala,
-			height: getHeightGridQuery("ConsultaSala"),
+			dataSource: DtsConsultaColaborador,
+			height: getHeightGridQuery("ConsultaColaborador"),
 			columns: getColumnsQuery(arrDataSource),
 			selectable: "row",
 			resizable: true,
@@ -239,10 +221,10 @@
 			sort: function () {
 			},
 			change: function () {
-				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnEditar")
+				$("#frmConsultaColaborador #BarAcoes").data("kendoToolBar").enable("#BtnEditar")
 			},
 			dataBound: function () {
-				LoadGridExportActions("frmConsultaSala", "GrdConsultaSala", true)
+				LoadGridExportActions("frmConsultaColaborador", "GrdConsultaColaborador", true)
 			},
 			pageable: {
 				pageSizes: [100, 300, 500, "all"],
@@ -251,37 +233,37 @@
 			},
 			columns: getColumnsQuery(arrDataSource),
 			columnShow: function (e) {
-				setWidthOnShowColumnGrid(e, 'ConsultaSala');
+				setWidthOnShowColumnGrid(e, 'ConsultaColaborador');
 			},
 			columnHide: function (e) {
-				setWidthOnHideColumnGrid(e, 'ConsultaSala');
+				setWidthOnHideColumnGrid(e, 'ConsultaColaborador');
 			},
 			filter: function (e) {
-				mountFilteredScreen('filterColumn', e, 'ConsultaSala', arrDataSource, DtsConsultaSala, getExtraFilter());
+				mountFilteredScreen('filterColumn', e, 'ConsultaColaborador', arrDataSource, DtsConsultaColaborador, getExtraFilter());
 			}
 		});
-		$("#frmConsultaSala #GrdConsultaSala").on("dblclick", "tbody>tr", function(){
-			$("#frmConsultaSala #BtnEditar").click();
+		$("#frmConsultaColaborador #GrdConsultaColaborador").on("dblclick", "tbody>tr", function(){
+			$("#frmConsultaColaborador #BtnEditar").click();
 		})
 		//----------------------------------------------------------------------------------------------------------------//
 
 		//----------------------------------------------------------------------------------------------------------------//
 		//Ação para abrir a tela de consulta
 		//----------------------------------------------------------------------------------------------------------------//
-		$("#WinConsultaSala").data("kendoWindow").open();
+		$("#WinConsultaColaborador").data("kendoWindow").open();
 		//----------------------------------------------------------------------------------------------------------------//
 
 		//----------------------------------------------------------------------------------------------------------------//
 		//Cria a tela de visualização do item do grid na consulta e faz outras coisas...
 		//----------------------------------------------------------------------------------------------------------------//
-		createScreenPreview(arrDataSource, "ConsultaSala");
+		createScreenPreview(arrDataSource, "ConsultaColaborador");
 		//----------------------------------------------------------------------------------------------------------------//
 
 	})
 </script>
 
 <div class="k-form">
-	<form id="frmConsultaSala" style="height: 100%;">
+	<form id="frmConsultaColaborador" style="height: 100%;">
 		<div id="splConsulta">
 			<div id="splHeader">
 				<div class="k-bg-blue screen-filter-content">
@@ -292,7 +274,7 @@
 							</td>
 
 							<td>
-								<div id="fltConsultaSala" style="width: auto;"></div>
+								<div id="fltConsultaColaborador" style="width: auto;"></div>
 							</td>
 
 							<td style="vertical-align: bottom;padding-bottom: 5px;">
@@ -319,17 +301,17 @@
 				</div>
 			</div>
 			<div id="splMiddle">
-				<div id="GrdConsultaSala" data-use-state-screen="true">
+				<div id="GrdConsultaColaborador" data-use-state-screen="true">
 
 				</div>
 			</div>
 			<div id="splFooter">
-				<div id="bottonConsultaSala">
-					<div id="tabStripConsultaSala">
+				<div id="bottonConsultaColaborador">
+					<div id="tabStripConsultaColaborador">
 						<ul>
 							<li id="tabDadosGerais" class="k-state-active"><label>Detalhes</label></li>
 						</ul>
-						<div id="tabDadosGeraisVisualizacaoConsultaSala"></div>
+						<div id="tabDadosGeraisVisualizacaoConsultaColaborador"></div>
 					</div>
 				</div>
 			</div>

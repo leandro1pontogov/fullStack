@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="ISO-8859-1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 
@@ -158,10 +158,15 @@
             text: "Janelas",
             items: [
               {
-                text: "Janela de Teste",
+                text: "Janela de Salas",
                 select: function () {
                   OpenWindow(false, "ConsultaSala", "controller/sala/ctrSala.php?action=winConsulta", "Janela Consulta Sala")
-      
+                }
+              },
+              {
+                text: "Janela de Colaboradores",
+                select: function () {
+                  OpenWindow(false, "ConsultaColaborador", "controller/colaborador/ctrColaborador.php?action=winConsulta", "Janela Consulta Colaborador")
                 }
               }
             ]

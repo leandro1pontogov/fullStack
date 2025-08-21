@@ -71,7 +71,7 @@ if(isset($_GET["action"]) && $_GET["action"] == "ListSala"){
 if(isset($_GET["action"]) && $_GET["action"] == "gravar"){
 
   $objTbSala->Set("idsala", $_POST["idSala"]);
-  $objTbSala->Set("nmsala", $_POST["nmSala"]);
+  $objTbSala->Set("nmsala", utf8_decode($_POST["nmSala"]));
   $objTbSala->Set("dslocalizacao", $_POST["dsLocalizacao"]);
   $objTbSala->Set("nrcapacidade", $_POST["nrCapacidade"]);
   $objTbSala->Set("txrecursosdisponiveis", $_POST["txRecursosDisponiveis"]);
