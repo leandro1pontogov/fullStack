@@ -49,18 +49,18 @@ if(isset($_GET["action"]) && $_GET["action"] == "ListColaborador"){
     $arrTempor = [];
 
     foreach($aroTbColaborador as $objTbColaborador){
-      $arrTempor["idcolaboradorsala"] = $objTbColaborador->Get("idcolaboradorsala");
-      $arrTempor["nmcolaboradorsala"] = $objTbColaborador->Get("nmcolaboradorsala");
-      $arrTempor["dsemail"] = $objTbColaborador->Get("dsemail");
-      $arrTempor["dssetor"] = $objTbColaborador->Get("dssetor");
+      $arrTempor["idcolaboradorsala"] = utf8_encode($objTbColaborador->Get("idcolaboradorsala"));
+      $arrTempor["nmcolaboradorsala"] = utf8_encode($objTbColaborador->Get("nmcolaboradorsala"));
+      $arrTempor["dsemail"] = utf8_encode($objTbColaborador->Get("dsemail"));
+      $arrTempor["dssetor"] = utf8_encode($objTbColaborador->Get("dssetor"));
 
       array_push($arrLinhas, $arrTempor);
     }
-      echo '{"jsonColaborador":'.json_encode($arrLinhas).', "jsonTotal": '. $_intTotalColaborador .'}';
+      echo '{"jsnColaborador":'.json_encode($arrLinhas).', "jsnTotal": '. $_intTotalColaborador .'}';
   }else if(!is_array($aroTbColaborador) && trim($aroTbColaborador) != ""){
       echo '{"error": '. $aroTbColaborador .'}'; 
   }else{
-      echo '{"jsonColaborador":null}';
+      echo '{"jsnColaborador":null}';
   }
   //-----------------------------------------------------------------------------------------//
 }
@@ -115,6 +115,21 @@ if(isset($_GET["action"]) && $_GET["action"] == "ListColaborador"){
   }
   //-----------------------------------------------------------------------------------------//
 
+  //-----------------------------------------------------------------------------------------//
+  //Ação para exclusão de registros
+  //-----------------------------------------------------------------------------------------//
+  if(isset($_GET["action"]) && $_GET["action"] == "excluir"){
+    $objTbColaborador = TbColaborador::LoadByIdColaborador($_POST["idColaborador"]);
+    $arrResult = $objTbColaborador->Delete($objTbColaborador);
+
+    if($arrResult["dsMsg"] == "ok"){
+    $objMsg->Succes("ntf", "Registro excluido com sucesso");
+    }else{
+    $objMsg->LoadMessage($arrResult);
+    $objTbColaborador = new TbColaborador();
+    }
+  }
+  //-----------------------------------------------------------------------------------------//
 
 
 

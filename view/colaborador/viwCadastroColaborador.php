@@ -141,7 +141,7 @@
       <tr>
         <td class="k-required" style="text-align: right; width: 120px;">Setor:</td>
         <td>
-          <input type="text" id="dsSetor" name="dsSetor" tabindex="2" class="k-textbox" style="width: 600px;" value="<?php echo $objTbColaborador->Get("dssetor") ?>">
+          <input type="text" id="dsSetor" name="dsSetor" tabindex="3" class="k-textbox" style="width: 600px;" value="<?php echo $objTbColaborador->Get("dssetor") ?>">
         </td>
       </tr>
     </table>

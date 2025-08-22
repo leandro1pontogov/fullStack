@@ -48,11 +48,11 @@ if(isset($_GET["action"]) && $_GET["action"] == "ListSala"){
     $arrTempor = [];
 
   foreach($aroTbSala as $objTbSala){
-    $arrTempor["idsala"] = $objTbSala->Get("idsala");
-    $arrTempor["nmsala"] = $objTbSala->Get("nmsala");
-    $arrTempor["dslocalizacao"] = $objTbSala->Get("dslocalizacao");
-    $arrTempor["nrcapacidade"] = $objTbSala->Get("nrcapacidade");
-    $arrTempor["txrecursosdisponiveis"] = $objTbSala->Get("txrecursosdisponiveis");
+    $arrTempor["idsala"] = utf8_encode($objTbSala->Get("idsala"));
+    $arrTempor["nmsala"] = utf8_encode($objTbSala->Get("nmsala"));
+    $arrTempor["dslocalizacao"] = utf8_encode($objTbSala->Get("dslocalizacao"));
+    $arrTempor["nrcapacidade"] = utf8_encode($objTbSala->Get("nrcapacidade"));
+    $arrTempor["txrecursosdisponiveis"] = utf8_encode($objTbSala->Get("txrecursosdisponiveis"));
 
     array_push($arrLinhas, $arrTempor);
   }
@@ -70,11 +70,11 @@ if(isset($_GET["action"]) && $_GET["action"] == "ListSala"){
 //------------------------------------------------------------------------------------------//
 if(isset($_GET["action"]) && $_GET["action"] == "gravar"){
 
-  $objTbSala->Set("idsala", $_POST["idSala"]);
+  $objTbSala->Set("idsala", utf8_decode($_POST["idSala"]));
   $objTbSala->Set("nmsala", utf8_decode($_POST["nmSala"]));
-  $objTbSala->Set("dslocalizacao", $_POST["dsLocalizacao"]);
+  $objTbSala->Set("dslocalizacao", utf8_decode($_POST["dsLocalizacao"]));
   $objTbSala->Set("nrcapacidade", $_POST["nrCapacidade"]);
-  $objTbSala->Set("txrecursosdisponiveis", $_POST["txRecursosDisponiveis"]);
+  $objTbSala->Set("txrecursosdisponiveis", utf8_decode($_POST["txRecursosDisponiveis"]));
 
   $strMessage = "";
 

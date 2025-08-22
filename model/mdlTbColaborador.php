@@ -29,6 +29,10 @@ class TbColaborador{
     $objTbColaborador->Set("dsemail", $resSet["dsemail"]);
     $objTbColaborador->Set("dssetor", $resSet["dssetor"]);
 
+    if(!isset($GLOBALS["_intTotalColaborador"])){
+      $GLOBALS["_intTotalColaborador"] = $resSet["_inttotal"];
+    }
+
     return $objTbColaborador;
   }
 
@@ -100,7 +104,7 @@ class TbColaborador{
     $dtbServer = new DtbServer();
     $objTbColaborador = new TbColaborador();
 
-    $dsSql = "SELECT FROM
+    $dsSql = "SELECT * FROM
                 shtreinamento.tbcolaboradorsala
               WHERE
                 idcolaboradorsala = ". $idColaborador .";";
@@ -119,7 +123,8 @@ class TbColaborador{
     $objTbColaborador = new TbColaborador();
 
     $dsSql = "SELECT 
-                *
+                *,
+                COUNT(*) OVER() _inttotal
               FROM
                 shtreinamento.tbcolaboradorsala
               WHERE
