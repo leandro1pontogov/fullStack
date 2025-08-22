@@ -168,6 +168,12 @@
                 select: function () {
                   OpenWindow(false, "ConsultaColaborador", "controller/colaborador/ctrColaborador.php?action=winConsulta", "Janela Consulta Colaborador")
                 }
+              },
+              {
+                text: "Janela de Reservas",
+                select: function () {
+                  OpenWindow(false, "ConsultaReserva", "controller/reserva/ctrReserva.php?action=winConsulta", "Janela Consulta Reserva")
+                }
               }
             ]
           }

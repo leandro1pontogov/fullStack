@@ -1,0 +1,118 @@
+<?php
+
+require_once "../../lib/libUtils.php";
+require_once "../../lib/libDatabase.php";
+require_once "../../model/mdlTbReserva.php";
+require_once "../../model/mdlTbSala.php";
+require_once "../../model/mdlTbColaborador.php";
+
+$objTbReserva = new TbReserva();
+$objMsg = new Message();
+
+if(isset($_GET["action"]) && $_GET["action"] == "winConsulta"){
+  require_once "../../view/reserva/viwConsultaReserva.php";
+}
+
+if(isset($_GET["action"]) && $_GET["action"] == "incluir"){
+  require_once "../../view/reserva/viwCadastroReserva.php";
+}
+
+if(isset($_GET["action"]) && $_GET["action"] == "editar"){
+  $objTbReserva = TbReserva::LoadByIdReserva($_GET["idReserva"]);
+  require_once "../../view/reserva/viwCadastroReserva.php";
+}
+
+//-----------------------------------------------------------------------------------------//
+//Aчуo de Consulta de Registros
+//-----------------------------------------------------------------------------------------//
+if(isset($_GET["action"]) && $_GET["action"] == "ListReserva"){
+  $objFilter = new Filter($_GET);
+  global $_intTotalReserva;
+
+  $aroTbReserva = TbReserva::ListByCondicao($objFilter->GetWhere(), $objFilter->GetOrderBy());
+
+  if(is_array($aroTbReserva) && count($aroTbReserva) > 0){
+    $arrLinhas = [];
+    $arrTempor = [];
+
+    foreach($aroTbReserva as $objTbReserva){
+      $arrTempor["idreserva"] = utf8_encode($objTbReserva->Get("idreserva"));
+      $arrTempor["nmsala"] = utf8_encode($objTbReserva->GetObjTbSala()->Get("nmsala"));
+      $arrTempor["nmcolaboradorsala"] = utf8_encode($objTbReserva->GetObjColaborador()->Get("nmcolaboradorsala"));
+      $arrTempor["dtdata"] = utf8_encode($objTbReserva->Get("dtdata"));
+      $arrTempor["hrinicio"] = utf8_encode($objTbReserva->Get("hrinicio"));
+      $arrTempor["hrfim"] = utf8_encode($objTbReserva->Get("hrfim"));
+
+      array_push($arrLinhas, $arrTempor);
+    }
+      echo '{"jsnReserva":'.json_encode($arrLinhas).', "jsnTotal": '. $_intTotalReserva .'}';
+  }else if(!is_array($aroTbReserva) && trim($aroTbReserva) != ""){
+      echo '{"error": '. $aroTbReserva .'}'; 
+  }else{
+      echo '{"jsnReserva":null}';
+  }
+  //-----------------------------------------------------------------------------------------//
+}
+
+
+if(isset($_GET["action"]) && $_GET["action"] == "gravar"){
+    
+    $objTbReserva->Set("idreserva", utf8_decode($_POST["idReserva"]));
+    $objTbReserva->Set("nmsala", utf8_decode($_POST["nmSala"]));
+    $objTbReserva->Set("nmcolaboradorsala", utf8_decode($_POST["idReserva"]));
+    $objTbReserva->Set("dtdata", utf8_decode($_POST["dtData"]));
+    $objTbReserva->Set("hrinicio", utf8_decode($_POST["hrInicio"]));
+    $objTbReserva->Set("hrfim", utf8_decode($_POST["hrFim"]));
+    
+    $strMessage = "";
+
+    
+
+    if(empty($objTbReserva->Get("dtdata"))){
+      $strMessage .= "&raquo; O campo <strong>Data</strong> щ de preenchimento obrigatorio.<br>";
+    }
+
+    if(empty($objTbReserva->Get("hrinicio"))){
+      $strMessage .= "&raquo; O campo <strong>Hora Inicio</strong> щ de preenchimento obrigatorio.<br>";
+    }
+
+    if(empty($objTbReserva->Get("hrfim"))){
+      $strMessage .= "&raquo; O campo <strong>Hora Fim</strong> щ de preenchimento obrigatorio.<br>";
+    }
+
+    if($strMessage != ""){
+      $objMsg->Alert("dlg", $strMessage);
+    }else{
+      if($objTbReserva->Get("idcolaboradorsala") != ""){
+        $arrResult = $objTbReserva->Update($objTbReserva);
+
+      if($arrResult["dsMsg"] == "ok"){
+        $objMsg->Succes("ntf", "Registro atualizado com sucesso");
+      }else{
+        $objMsg->LoadMessage($arrResult);
+        $objTbReserva = new TbReserva();
+      }
+      }else{
+        $arrResult = $objTbReserva->Insert($objTbReserva);
+
+      if($arrResult["dsMsg"] == "ok"){
+        $objMsg->Succes("ntf", "Registro inserido com sucesso");
+      }else{
+        $objMsg->LoadMessage($arrResult);
+        $objTbReserva = new TbReserva();
+      }
+     }
+    }
+  }
+
+  if(isset($_GET["action"]) && $_GET["action"] == "excluir"){
+    $objTbReserva = TbReserva::LoadByIdReserva($_POST["idReserva"]);
+    $arrResult = $objTbReserva->Delete($objTbReserva);
+
+    if($arrResult["dsMsg"] == "ok"){
+    $objMsg->Succes("ntf", "Registro excluido com sucesso");
+    }else{
+    $objMsg->LoadMessage($arrResult);
+    $objTbReserva = new TbReserva();
+    }
+  }
