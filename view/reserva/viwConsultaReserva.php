@@ -4,6 +4,25 @@
 
 <script>
 	$(function (){
+
+		$("#frmConsultaReserva #BtnSala").kendoButton(
+      {
+        spriteCssClass: "k-pg-icon k-i-l1-c2",
+        enable: <?=$blSalaSelecionada ? "false" : "true" ?>,
+        click: function(){
+          OpenWindow(true, "ConsultaSala", "controller/sala/ctrSala.php?action=winConsulta", "Janela Consulta Sala", "frmConsultaReserva")
+        }
+      }
+    );
+		$("#frmConsultaReserva #BtnColaborador").kendoButton(
+      {
+        spriteCssClass: "k-pg-icon k-i-l1-c2",
+        enable: <?=$blColaboradorSelecionado ? "false" : "true" ?>,
+        click: function(){
+          OpenWindow(true, "ConsultaColaborador", "controller/colaborador/ctrColaborador.php?action=winConsulta", "Janela Consulta Colaborador", "frmConsultaReserva")
+        }
+      }
+    );
 		
 		var arrDataSource = [
 			{
@@ -64,7 +83,7 @@
 				name: "idcolaboradorsala",
 				type: "integer",
 				label: "Id Colaborador",
-				visibleFilter: 'true',
+				visibleFilter: 'false',
 				orderFilter: '4',
 
 				orderGrid: '3',
@@ -82,7 +101,7 @@
 				name: "nmcolaboradorsala",
 				type: "string",
 				label: "Nome Colaborador",
-				visibleFilter: 'true',
+				visibleFilter: 'false',
 				orderFilter: '4',
 
 				orderGrid: '3',
@@ -100,7 +119,7 @@
 				name: "dtdata",
 				type: "date",
 				label: "Data",
-				visibleFilter: 'true',
+				visibleFilter: 'false',
 				orderFilter: '5',
 
 				orderGrid: '4',
@@ -118,7 +137,7 @@
 				name: "hrinicio",
 				type: "time",
 				label: "Hora Inicio",
-				visibleFilter: 'true',
+				visibleFilter: 'false',
 				orderFilter: '6',
 
 				orderGrid: '5',
@@ -136,7 +155,7 @@
 				name: "hrfim",
 				type: "time",
 				label: "Hora Fim",
-				visibleFilter: 'true',
+				visibleFilter: 'false',
 				orderFilter: '7',
 
 				orderGrid: '6',
@@ -171,7 +190,7 @@
 		$("#frmConsultaReserva #BarAcoes").kendoToolBar({
 			items: [
 				{
-					type: "spacer"
+					type: "spacer",
 				},
 				{
 					type: "buttonGroup",
@@ -339,6 +358,24 @@
 		<div id="splConsulta">
 			<div id="splHeader">
 				<div class="k-bg-blue screen-filter-content">
+					<table width="100%" border="0" cellspacing="0" role="presentation">
+						<tr>
+							<td style="width: 120px; text-align: right;">Sala:</td>
+							<td style="padding-left: 3px;">
+								<input type="text" tabindex="-1" id="idSala" name="idSala" class="k-input-disabled k-textbox" readonly="readonly" style="width: 60px; background-color: #e8e8e8;" value="<?php echo $objTbReserva->Get("idsala")?>">
+								<span id="BtnSala" style="cursor: pointer; width: 24px; height: 24px;" title="consultarSalas"></span>
+								<input type="text" tabindex="-1" id="nmSala" name="nmSala" class="k-input-disabled k-textbox" readonly="readonly" style="width: 430px; background-color: #e8e8e8;">
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 120px; text-align: right;">Colaborador:</td>
+							<td style="padding-left: 3px;">
+								<input type="text" tabindex="-1" id="idColaborador" name="idColaborador" class="k-input-disabled k-textbox" readonly="readonly" style="width: 60px; background-color: #e8e8e8;">
+								<span id="BtnColaborador" style="cursor: pointer; width: 24px; height: 24px;" title="consultarSalas"></span>
+								<input type="text" tabindex="-1" id="nmColaborador" name="nmColaborador" class="k-input-disabled k-textbox" readonly="readonly" style="width: 430px; background-color: #e8e8e8;">
+							</td>
+						</tr>
+					</table>
 					<table>
 						<tr>
 							<td style="width: 120px;text-align: right;vertical-align: top;padding-top: 6px;">

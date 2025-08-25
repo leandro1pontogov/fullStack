@@ -123,21 +123,12 @@
 					type: "buttonGroup",
 					buttons: [
 						{
-							id: "BtnSelecionar",
-							spriteCssClass: "k-pg-icon k-i-l9-c4",
-							text: "Selecionar",
+							id: "BtnAcessoRapido",
+							spriteCssClass: "k-pg-icon k-i-l2-c10",
+							text: "Acesso Rapido <span class='k-icon k-i-arrow-s' style='width:12px'></span>",
 							group: "actions",
 							enable: false,
-							attributes: { tabindex: "33" },
-							click: function () {
-								var GrdConsultaSala = $("#frmConsultaSala #GrdConsultaSala").data("kendoGrid");
-								var RstSala = GrdConsultaSala.dataItem(GrdConsultaSala.select());
-
-								$("<?=$frmResult?> #idSala").val(RstSala.idsala).change();
-								$("<?=$frmResult?> #nmSala").val(RstSala.nmsala).change();
-
-								$("#WinConsultaSala").data("kendoWindow").close();
-							}
+							attributes: { tabindex: "34" }
 						}
 					]
 				},
@@ -156,6 +147,28 @@
 								var RstSala = GrdConsultaSala.dataItem(GrdConsultaSala.select());
 
 								OpenWindow(true, "CadastroReserva", "controller/reserva/ctrReserva.php?action=incluir&idSala=" + RstSala.idsala , "Janela Cadastro Reserva")
+							}
+						}
+					]
+				},
+				{
+					type: "buttonGroup",
+					buttons: [
+						{
+							id: "BtnSelecionar",
+							spriteCssClass: "k-pg-icon k-i-l9-c4",
+							text: "Selecionar",
+							group: "actions",
+							enable: false,
+							attributes: { tabindex: "33" },
+							click: function () {
+								var GrdConsultaSala = $("#frmConsultaSala #GrdConsultaSala").data("kendoGrid");
+								var RstSala = GrdConsultaSala.dataItem(GrdConsultaSala.select());
+
+								$("<?=$frmResult?> #idSala").val(RstSala.idsala).change();
+								$("<?=$frmResult?> #nmSala").val(RstSala.nmsala).change();
+
+								$("#WinConsultaSala").data("kendoWindow").close();
 							}
 						}
 					]
@@ -281,7 +294,8 @@
 			},
 			change: function () {
 				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnEditar");
-				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnReservar")
+				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnReservar");
+				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnAcessoRapido");
 				if("<?php echo $frmResult?>" != ""){
 					$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnSelecionar")
 				}
@@ -309,6 +323,25 @@
 			$("#frmConsultaSala #BtnEditar").click();
 		})
 		//----------------------------------------------------------------------------------------------------------------//
+
+		if($("#menuAcessoRapidoSala").data("kendoContextMenu")){
+			$("#menuAcessoRapidoSala").data("kendoContextMenu").destroy()
+		}
+
+		$("#frmConsultaSala #menuAcessoRapidoSala").kendoContextMenu({
+			target: "#frmConsultaSala #BtnAcessoRapido",
+			alignToAnchor: true,
+			showOn: "click",
+			select: function(e){
+				var GrdConsultaSala = $("#frmConsultaSala #GrdConsultaSala").data("kendoGrid");
+				var RstSala = GrdConsultaSala.dataItem(GrdConsultaSala.select());
+
+				if(e.item.id == "BtnSala"){
+					//OpenWindow(false, "ConsultaReserva&idSala=" + RstSala.idsala + "&flAcessoRapido=S&")
+					OpenWindow(false, "ConsultaReserva", "controller/reserva/ctrReserva.php?action=winConsulta&idSala=" + RstSala.idsala , "Janela Consulta Reserva")
+				}
+			}
+		})
 
 		//----------------------------------------------------------------------------------------------------------------//
 		//Ação para abrir a tela de consulta
@@ -365,6 +398,10 @@
 			</div>
 			<div id="splMiddle">
 				<div id="GrdConsultaSala" data-use-state-screen="true">
+
+				<ul id="menuAcessoRapidoSala">
+					<li id="BtnSala"><span class="k-pg-icon k-i-l4-c9"></span>&nbsp;Salas</li>
+				</ul>
 
 				</div>
 			</div>

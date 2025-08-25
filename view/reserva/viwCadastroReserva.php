@@ -7,7 +7,7 @@
     $("#dtData").kendoDatePicker();
     $("#hrInicio").kendoTimePicker();
     $("#hrFim").kendoTimePicker();
-    $("#BtnSala").kendoButton(
+    $("#frmCadastroReserva #BtnSala").kendoButton(
       {
         spriteCssClass: "k-pg-icon k-i-l1-c2",
         enable: <?=$blSalaSelecionada ? "false" : "true" ?>,
@@ -16,12 +16,79 @@
         }
       }
     );
-    $("#BtnColaborador").kendoButton({
+    $("#frmCadastroReserva #BtnColaborador").kendoButton({
       spriteCssClass: "k-pg-icon k-i-l1-c2",
         click: function(){
           OpenWindow(true, "ConsultaColaborador", "controller/colaborador/ctrColaborador.php?action=winConsulta", "Janela Consulta Colaborador", "frmCadastroReserva")
         }
     });
+
+    //Montando o Autocomplete do Campo de Nome Sala
+    $("#frmCadastroReserva #nmSala").kendoAutoComplete({
+      dataTextField: "nmsala",
+      minLenght: 2,
+      dataSource: {
+        serverFiltering: true,
+        transport: {
+          read: {
+            url: "controller/reserva/ctrReserva.php",
+            type: "get",
+            dataType: "json",
+            data: {
+              action: 'AutoComplete'
+            }
+          }
+        },
+        schema: {
+          data: "data",
+          model: {
+            fields: {
+              idsala: { field: "idsala", type: "number" },
+              nmsala: { field: "nmsala", type: "string" }
+            }
+          }
+        }
+      },
+      select: function(e){
+        $("#frmCadastroReserva #idSala").val(this.dataItem(e.item.index()).idsala);
+      },
+      filtering: function(e){
+        $("#frmCadastroReserva #idSala").val('')
+      }
+    })
+     //Montando o Autocomplete do Campo de Nome Sala
+    $("#frmCadastroReserva #nmColaborador").kendoAutoComplete({
+      dataTextField: "nmcolaboradorsala",
+      minLenght: 2,
+      dataSource: {
+        serverFiltering: true,
+        transport: {
+          read: {
+            url: "controller/reserva/ctrReserva.php",
+            type: "get",
+            dataType: "json",
+            data: {
+              action: 'AutoCompleteColaborador'
+            }
+          }
+        },
+        schema: {
+          data: "data",
+          model: {
+            fields: {
+              idsala: { field: "idcolaboradorsala", type: "number" },
+              nmsala: { field: "nmcolaboradorsala", type: "string" }
+            }
+          }
+        }
+      },
+      select: function(e){
+        $("#frmCadastroReserva #idSala").val(this.dataItem(e.item.index()).idsala);
+      },
+      filtering: function(e){
+        $("#frmCadastroReserva #idSala").val('')
+      }
+    })
     
     
     //-----------------------------------------------------------------------------------------//

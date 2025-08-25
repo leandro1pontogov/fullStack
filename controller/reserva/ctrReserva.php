@@ -15,8 +15,10 @@ if(isset($_GET["action"]) && $_GET["action"] == "winConsulta"){
 
 if(isset($_GET["action"]) && $_GET["action"] == "incluir"){
   $objTbReserva->Set("idsala", $_GET["idSala"]);
+  $objTbReserva->Set("idcolaboradorsaça", $_GET["idColaborador"]);
 
   $blSalaSelecionada = $_GET["idSala"] != "";
+  $blColaboradorSelecionado = $_GET["idColaborador"] != "";
 
   require_once "../../view/reserva/viwCadastroReserva.php";
 }
@@ -24,6 +26,50 @@ if(isset($_GET["action"]) && $_GET["action"] == "incluir"){
 if(isset($_GET["action"]) && $_GET["action"] == "editar"){
   $objTbReserva = TbReserva::LoadByIdReserva($_GET["idReserva"]);
   require_once "../../view/reserva/viwCadastroReserva.php";
+}
+
+if(isset($_GET["action"]) && $_GET["action"] == "AutoComplete"){
+  $strFiltro = " and upper(clear(nmsala)) like upper(clear('%".utf8_decode($_GET["filter"]["filters"][0]["value"])."%')) ";
+  $strOrdenacao = " nmsala asc";
+
+  $aroTbSala = TbSala::ListByCondicao($strFiltro, $strOrdenacao);
+
+  if($aroTbSala && is_array($aroTbSala) == true){
+    $arrTempor = array();
+    $arrLinhas = array();
+
+    foreach($aroTbSala as $key => $objTbSala){
+      $arrTempor["idsala"] = utf8_encode($objTbSala->Get("idsala"));
+      $arrTempor["nmsala"] = utf8_encode($objTbSala->Get("nmsala"));
+      array_push($arrLinhas, $arrTempor);
+    }
+  }
+
+  header("Content-type: application/json");
+  echo "{\"data\":".json_encode($arrLinhas)."}";
+
+}
+
+if(isset($_GET["action"]) && $_GET["action"] == "AutoCompleteColaborador"){
+  $strFiltro = " and upper(clear(nmcolaboradorsala)) like upper(clear('%".utf8_decode($_GET["filter"]["filters"][0]["value"])."%')) ";
+  $strOrdenacao = " nmcolaboradorsala asc";
+
+  $aroTbColaborador = TbColaborador::ListByCondicao($strFiltro, $strOrdenacao);
+
+  if($aroTbColaborador && is_array($aroTbColaborador) == true){
+    $arrTempor = array();
+    $arrLinhas = array();
+
+    foreach($aroTbColaborador as $key => $objTbSala){
+      $arrTempor["idcolaboradorsala"] = utf8_encode($objTbSala->Get("idcolaboradorsala"));
+      $arrTempor["nmcolaboradorsala"] = utf8_encode($objTbSala->Get("nmcolaboradorsala"));
+      array_push($arrLinhas, $arrTempor);
+    }
+  }
+
+  header("Content-type: application/json");
+  echo "{\"data\":".json_encode($arrLinhas)."}";
+
 }
 
 //-----------------------------------------------------------------------------------------//
