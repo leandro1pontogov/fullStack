@@ -58,15 +58,13 @@ if(isset($_GET["action"]) && $_GET["action"] == "ListReserva"){
 if(isset($_GET["action"]) && $_GET["action"] == "gravar"){
     
     $objTbReserva->Set("idreserva", utf8_decode($_POST["idReserva"]));
-    $objTbReserva->Set("nmsala", utf8_decode($_POST["nmSala"]));
-    $objTbReserva->Set("nmcolaboradorsala", utf8_decode($_POST["idReserva"]));
+    $objTbReserva->Set("idsala", utf8_decode($_POST["idSala"]));
+    $objTbReserva->Set("idcolaboradorsala", utf8_decode($_POST["idColaborador"]));
     $objTbReserva->Set("dtdata", utf8_decode($_POST["dtData"]));
     $objTbReserva->Set("hrinicio", utf8_decode($_POST["hrInicio"]));
     $objTbReserva->Set("hrfim", utf8_decode($_POST["hrFim"]));
     
     $strMessage = "";
-
-    
 
     if(empty($objTbReserva->Get("dtdata"))){
       $strMessage .= "&raquo; O campo <strong>Data</strong> é de preenchimento obrigatorio.<br>";
@@ -83,7 +81,7 @@ if(isset($_GET["action"]) && $_GET["action"] == "gravar"){
     if($strMessage != ""){
       $objMsg->Alert("dlg", $strMessage);
     }else{
-      if($objTbReserva->Get("idcolaboradorsala") != ""){
+      if($objTbReserva->Get("idreserva") != ""){
         $arrResult = $objTbReserva->Update($objTbReserva);
 
       if($arrResult["dsMsg"] == "ok"){

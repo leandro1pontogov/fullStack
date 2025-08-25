@@ -11,6 +11,10 @@ $objMsg = new Message();
 //Ação de Abertura da Tela de Consulta
 //------------------------------------------------------------------------------------------//
 if(isset($_GET["action"]) && $_GET["action"] == "winConsulta"){
+  $frmResult = "";
+  if(isset($_GET["frmResult"]) && $_GET["frmResult"] != ""){
+    $frmResult = "#".$_GET["frmResult"];
+  }
   require_once "../../view/sala/viwConsultaSala.php";
 }
 //------------------------------------------------------------------------------------------//

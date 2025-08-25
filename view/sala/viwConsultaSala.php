@@ -123,6 +123,28 @@
 					type: "buttonGroup",
 					buttons: [
 						{
+							id: "BtnSelecionar",
+							spriteCssClass: "k-pg-icon k-i-l9-c4",
+							text: "Selecionar",
+							group: "actions",
+							enable: false,
+							attributes: { tabindex: "33" },
+							click: function () {
+								var GrdConsultaSala = $("#frmConsultaSala #GrdConsultaSala").data("kendoGrid");
+								var RstSala = GrdConsultaSala.dataItem(GrdConsultaSala.select());
+
+								$("<?=$frmResult?> #idSala").val(RstSala.idsala).change();
+								$("<?=$frmResult?> #nmSala").val(RstSala.nmsala).change();
+
+								$("#WinConsultaSala").data("kendoWindow").close();
+							}
+						}
+					]
+				},
+				{
+					type: "buttonGroup",
+					buttons: [
+						{
 							id: "BtnIncluir",
 							spriteCssClass: "k-pg-icon k-i-l1-c1",
 							text: "Incluir",
@@ -239,7 +261,10 @@
 			sort: function () {
 			},
 			change: function () {
-				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnEditar")
+				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnEditar");
+				if("<?php echo $frmResult?>" != ""){
+					$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnSelecionar")
+				}
 			},
 			dataBound: function () {
 				LoadGridExportActions("frmConsultaSala", "GrdConsultaSala", true)

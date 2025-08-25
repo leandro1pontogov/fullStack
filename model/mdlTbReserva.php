@@ -76,16 +76,15 @@ class TbReserva{
                   dtdata,
                   hrinicio,
                   hrfim
-                  )
-                  VALUES(
-                  (SELECT NEXTVAL('shtreinamento.sqidreserva')),
-                  '".$fmt->escSqlQuotes($objTbReserva->Get("idreserva"))."',
-                  ".$fmt->escSqlQuotes($objTbReserva->Get("idsala")).",
-                  ".$fmt->escSqlQuotes($objTbReserva->Get("idcolaboradorsala")).",
-                  ".$fmt->data($objTbReserva->Get("dtdata")).",
-                  ".$fmt->TimeBd($objTbReserva->Get("hrinicio")).",
-                  ".$fmt->TimeBd($objTbReserva->Get("hrfim"))."
-                  );";
+                )
+              VALUES (
+                (SELECT NEXTVAL('shtreinamento.sqidreserva')),
+                ".$fmt->escSqlQuotes($objTbReserva->Get("idsala")).",
+                ".$fmt->escSqlQuotes($objTbReserva->Get("idcolaboradorsala")).",
+                '".$fmt->data($objTbReserva->Get("dtdata"))."',
+                ".$fmt->TimeBd($objTbReserva->Get("hrinicio")).",
+                ".$fmt->TimeBd($objTbReserva->Get("hrfim"))."
+              );";
 
     if(!$dtbServer->Exec($dsSql)){
       $arrMsg = $dtbServer->getMessage();
