@@ -145,6 +145,25 @@
 					type: "buttonGroup",
 					buttons: [
 						{
+							id: "BtnReservar",
+							spriteCssClass: "k-pg-icon k-i-l3-c5",
+							text: "Reservar",
+							group: "actions",
+							enable: false,
+							attributes: { tabindex: "34" },
+							click: function () {
+								var GrdConsultaSala = $("#frmConsultaSala #GrdConsultaSala").data("kendoGrid");
+								var RstSala = GrdConsultaSala.dataItem(GrdConsultaSala.select());
+
+								OpenWindow(true, "CadastroReserva", "controller/reserva/ctrReserva.php?action=incluir&idSala=" + RstSala.idsala , "Janela Cadastro Reserva")
+							}
+						}
+					]
+				},
+				{
+					type: "buttonGroup",
+					buttons: [
+						{
 							id: "BtnIncluir",
 							spriteCssClass: "k-pg-icon k-i-l1-c1",
 							text: "Incluir",
@@ -262,6 +281,7 @@
 			},
 			change: function () {
 				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnEditar");
+				$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnReservar")
 				if("<?php echo $frmResult?>" != ""){
 					$("#frmConsultaSala #BarAcoes").data("kendoToolBar").enable("#BtnSelecionar")
 				}

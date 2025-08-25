@@ -14,6 +14,10 @@ if(isset($_GET["action"]) && $_GET["action"] == "winConsulta"){
 }
 
 if(isset($_GET["action"]) && $_GET["action"] == "incluir"){
+  $objTbReserva->Set("idsala", $_GET["idSala"]);
+
+  $blSalaSelecionada = $_GET["idSala"] != "";
+
   require_once "../../view/reserva/viwCadastroReserva.php";
 }
 

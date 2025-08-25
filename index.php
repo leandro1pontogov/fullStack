@@ -128,6 +128,19 @@
   <script>
 
     function OpenWindow(blModal, nmJanela, dsUrlController, dsTitulo = '', frmResult = '') {
+
+      if($('#Win' + nmJanela).data("kendoWindow")){
+      $('#Win' + nmJanela).data("kendoWindow").close();
+
+      setTimeout(function(){
+      CreateWindow(blModal, nmJanela, dsUrlController, dsTitulo, frmResult)
+        }, 500)
+        } else {
+      CreateWindow(blModal, nmJanela, dsUrlController, dsTitulo, frmResult)
+      }
+    }
+
+    function CreateWindow(blModal, nmJanela, dsUrlController, dsTitulo = '', frmResult = '') {
       $("#DivWindowArea").append('<div id="Win' + nmJanela + '"></div>');
 
       $('#Win' + nmJanela).kendoWindow({

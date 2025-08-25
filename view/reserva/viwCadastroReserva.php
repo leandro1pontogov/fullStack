@@ -10,6 +10,7 @@
     $("#BtnSala").kendoButton(
       {
         spriteCssClass: "k-pg-icon k-i-l1-c2",
+        enable: <?=$blSalaSelecionada ? "false" : "true" ?>,
         click: function(){
           OpenWindow(true, "ConsultaSala", "controller/sala/ctrSala.php?action=winConsulta", "Janela Consulta Sala", "frmCadastroReserva")
         }
@@ -21,6 +22,8 @@
           OpenWindow(true, "ConsultaColaborador", "controller/colaborador/ctrColaborador.php?action=winConsulta", "Janela Consulta Colaborador", "frmCadastroReserva")
         }
     });
+    
+    
     //-----------------------------------------------------------------------------------------//
 
     //-----------------------------------------------------------------------------------------//
@@ -49,7 +52,11 @@
                     Message(response.flDisplay, response.flTipo, response.dsMsg);
                     if(response.flTipo == "S"){
                       $("#frmConsultaReserva #BtnPesquisar").click()
-                      $("#frmCadastroReserva #BtnLimpar").click()
+                      if(!<?=$blSalaSelecionada ? "true" : "false" ?>){
+                        $("#frmCadastroReserva #BtnLimpar").click()
+                      }else{
+                        $("#WinCadastroReserva").data("kendoWindow").close();
+                      }
                     }
                    },
                    "json"
@@ -128,7 +135,7 @@
   <form id="frmCadastroReserva" style="height: 100%;">
     <table width="100%" cellspacing="2" cellpadding="0" role="presentation">
       <tr>
-        <td style="text-align: right; width: 120px;">Id Reserva:</td>
+        <td style="text-align: right; width: 120px;">Id:</td>
         <td>
           <input type="text" id="idReserva" name="idReserva" tabindex="-1" class="k-textbox k-input-disabled" readonly="readonly" value="<?php echo $objTbReserva->Get("idreserva") ?>">
         </td>
@@ -136,7 +143,7 @@
     </table>
      <table width="100%" cellspacing="2" cellpadding="0" role="presentation">
       <tr>
-        <td style="text-align: right; width: 120px;">Id Sala:</td>
+        <td style="text-align: right; width: 120px;">Sala:</td>
         <td>
           <input type="text" id="idSala" name="idSala" tabindex="-1" class="k-textbox k-input-disabled" style="width: 60px;" readonly="readonly" value="<?php echo $objTbReserva->GetObjTbSala()->Get("idsala") ?>">
           <span id="BtnSala" style="cursor: pointer; width: 24px; height: 24px;" title="consultarSalas"></span>
@@ -146,7 +153,7 @@
     </table>
     <table width="100%" cellspacing="2" cellpadding="0" role="presentation">
       <tr>
-        <td style="text-align: right; width: 120px;">Id Colaborador:</td>
+        <td style="text-align: right; width: 120px;">Colaborador:</td>
         <td>
           <input type="text" id="idColaborador" name="idColaborador" style="width: 60px;" tabindex="-1" class="k-textbox k-input-disabled" readonly="readonly" value="<?php echo $objTbReserva->GetObjColaborador()->Get("idcolaboradorsala") ?>">
           <span id="BtnColaborador" style="cursor: pointer; width: 24px; height: 24px;" title="consultarColaboradores"></span>
