@@ -11,6 +11,7 @@
         enable: <?=$blSalaSelecionada ? "false" : "true" ?>,
         click: function(){
           OpenWindow(true, "ConsultaSala", "controller/sala/ctrSala.php?action=winConsulta", "Janela Consulta Sala", "frmConsultaReserva")
+					$("#frmConsultaReserva #BtnPesquisar").click()
         }
       }
     );
@@ -20,6 +21,25 @@
         enable: <?=$blColaboradorSelecionado ? "false" : "true" ?>,
         click: function(){
           OpenWindow(true, "ConsultaColaborador", "controller/colaborador/ctrColaborador.php?action=winConsulta", "Janela Consulta Colaborador", "frmConsultaReserva")
+					$("#frmConsultaReserva #BtnPesquisar").click()
+        }
+      }
+    );
+		$("#frmConsultaReserva #BtnCleanFilterSala").kendoButton(
+      {
+        enable: <?=$blSalaSelecionada ? "false" : "true" ?>,
+        click: function(){
+          $("#frmConsultaReserva #nmSala").val('')
+					$("#frmConsultaReserva #idSala").val('')
+        }
+      }
+    );
+			$("#frmConsultaReserva #BtnCleanFilterColaborador").kendoButton(
+      {
+        enable: <?=$blColaboradorSelecionado ? "false" : "true" ?>,
+        click: function(){
+          $("#frmConsultaReserva #nmColaborador").val('')
+					$("#frmConsultaReserva #idColaborador").val('')
         }
       }
     );
@@ -56,7 +76,7 @@
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
 
-				showPreview: 'true',
+				showPreview: 'false',
 				indiceTabPreview: 'tabDadosGerais',
 				widthPreview: '70',
 				positionPreview: '2',
@@ -65,7 +85,7 @@
 				name: "nmsala",
 				type: "string",
 				label: "Nome Sala",
-				visibleFilter: 'true',
+				visibleFilter: 'false',
 				orderFilter: '4',
 
 				orderGrid: '3',
@@ -76,14 +96,14 @@
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '120',
+				widthPreview: '200',
 				positionPreview: '3',
 			},
       {
 				name: "idcolaboradorsala",
 				type: "integer",
 				label: "Id Colaborador",
-				visibleFilter: 'false',
+				visibleFilter: 'true',
 				orderFilter: '4',
 
 				orderGrid: '3',
@@ -92,10 +112,10 @@
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
 
-				showPreview: 'true',
+				showPreview: 'false',
 				indiceTabPreview: 'tabDadosGerais',
 				widthPreview: '70',
-				positionPreview: '3',
+				positionPreview: '4',
 			},
       {
 				name: "nmcolaboradorsala",
@@ -112,8 +132,8 @@
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '120',
-				positionPreview: '3',
+				widthPreview: '200',
+				positionPreview: '5',
 			},
 			{
 				name: "dtdata",
@@ -130,8 +150,8 @@
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '600',
-				positionPreview: '4',
+				widthPreview: '100',
+				positionPreview: '6',
 			},
 			{
 				name: "hrinicio",
@@ -148,15 +168,15 @@
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '600',
-				positionPreview: '5',
+				widthPreview: '70',
+				positionPreview: '7',
 			},
 			{
 				name: "hrfim",
 				type: "time",
 				label: "Hora Fim",
 				visibleFilter: 'false',
-				orderFilter: '7',
+				orderFilter: '8',
 
 				orderGrid: '6',
 				widthGrid: '150',
@@ -167,7 +187,7 @@
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
 				widthPreview: '70',
-				positionPreview: '6'
+				positionPreview: '9'
 			}
 		]
 
@@ -261,7 +281,9 @@
 					data: function(){
 						return {
 							action: "ListReserva",
-							filters: getExtraFilter()
+							filters: getExtraFilter(),
+							idSala: $("#frmConsultaReserva #idSala").val(),
+							idColaborador: $("#frmConsultaReserva #idColaborador").val()
 						}					
 					}
 				}
@@ -362,17 +384,19 @@
 						<tr>
 							<td style="width: 120px; text-align: right;">Sala:</td>
 							<td style="padding-left: 3px;">
-								<input type="text" tabindex="-1" id="idSala" name="idSala" class="k-input-disabled k-textbox" readonly="readonly" style="width: 60px; background-color: #e8e8e8;" value="<?php echo $objTbReserva->Get("idsala")?>">
-								<span id="BtnSala" style="cursor: pointer; width: 24px; height: 24px;" title="consultarSalas"></span>
-								<input type="text" tabindex="-1" id="nmSala" name="nmSala" class="k-input-disabled k-textbox" readonly="readonly" style="width: 430px; background-color: #e8e8e8;">
+								<input type="text" tabindex="-1" id="idSala" name="idSala" class="k-input-disabled k-textbox" readonly="readonly" style="width: 60px; background-color: #e8e8e8;" value="<?php echo $objTbSala->Get("idsala")?>">
+								<span id="BtnSala" style="cursor: pointer; width: 24px; height: 24px;" title="consultarSalas" ></span></span>
+								<input type="text" tabindex="-1" id="nmSala" name="nmSala" class="k-input-disabled k-textbox" readonly="readonly" style="width: 430px; background-color: #e8e8e8;" value="<?php echo $objTbSala->Get("nmsala")?>">
+								<span id="BtnCleanFilterSala" style="cursor: pointer;width: 21px !important;height: 21px !important" title="Limpar Filtros" data-role="button" class="k-button k-button-icon" role="button" aria-disabled="false"><span class="k-sprite k-pg-icon k-i-l1-c6" style="margin: 0 auto;margin-top: 1.4px;"></span></span>
 							</td>
 						</tr>
 						<tr>
 							<td style="width: 120px; text-align: right;">Colaborador:</td>
 							<td style="padding-left: 3px;">
-								<input type="text" tabindex="-1" id="idColaborador" name="idColaborador" class="k-input-disabled k-textbox" readonly="readonly" style="width: 60px; background-color: #e8e8e8;">
+								<input type="text" tabindex="-1" id="idColaborador" name="idColaborador" class="k-input-disabled k-textbox" readonly="readonly" style="width: 60px; background-color: #e8e8e8;" value="<?php echo $objTbColaborador->Get("idcolaboradorsala")?>">
 								<span id="BtnColaborador" style="cursor: pointer; width: 24px; height: 24px;" title="consultarSalas"></span>
-								<input type="text" tabindex="-1" id="nmColaborador" name="nmColaborador" class="k-input-disabled k-textbox" readonly="readonly" style="width: 430px; background-color: #e8e8e8;">
+								<input type="text" tabindex="-1" id="nmColaborador" name="nmColaborador" class="k-input-disabled k-textbox" readonly="readonly" style="width: 430px; background-color: #e8e8e8;" value="<?php echo $objTbColaborador->Get("nmcolaboradorsala")?>">
+								<span id="BtnCleanFilterColaborador" style="cursor: pointer;width: 21px !important;height: 21px !important" title="Limpar Filtros" data-role="button" class="k-button k-button-icon" role="button" aria-disabled="false"><span class="k-sprite k-pg-icon k-i-l1-c6" style="margin: 0 auto;margin-top: 1.4px;"></span></span>
 							</td>
 						</tr>
 					</table>

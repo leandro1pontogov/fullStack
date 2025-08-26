@@ -6,6 +6,7 @@ class TbSala{
   private $dslocalizacao;
   private $nrcapacidade;
   private $txrecursosdisponiveis;
+  private $dtbLink;
 
   public function __construct(){
     $this->idsala = "";
@@ -17,6 +18,10 @@ class TbSala{
 
   public function Set($prpTbSala, $valTbSala){
     $this->$prpTbSala = $valTbSala;
+  }
+
+  public function SetDtbLink($dtbLink){
+    $this->dtbLink = $dtbLink;
   }
 
   public function Get($prpTbSala){
@@ -40,7 +45,9 @@ class TbSala{
   }
 
   public function Insert($objTbSala){
-    $dtbServer = new DtbServer();
+    if($this->dtbLink == null){
+      $this->dtbLink = new DtbServer();
+    }
     $fmt = new Format();
 
     $dsSql = "INSERT INTO
@@ -59,8 +66,8 @@ class TbSala{
                 ".$fmt->NullString($fmt->escSqlQuotes($objTbSala->Get("txrecursosdisponiveis"))) ."
                 );";
 
-    if(!$dtbServer->Exec($dsSql)){
-      $arrMsg = $dtbServer->getMessage();
+    if(!$this->dtbLink->Exec($dsSql)){
+      $arrMsg = $this->dtbLink->getMessage();
     }else{
       $arrMsg = ["dsMsg"=>"ok"];
     }
@@ -68,7 +75,9 @@ class TbSala{
   }
 
   public function Update($objTbSala){
-    $dtbServer = new DtbServer();
+    if($this->dtbLink == null){
+      $this->dtbLink = new DtbServer();
+    }
     $fmt = new Format();
 
     $dsSql = "UPDATE 
@@ -82,8 +91,8 @@ class TbSala{
                 WHERE
                   idsala = ".$objTbSala->Get("idsala") .";";
                   
-  if(!$dtbServer->Exec($dsSql)){
-      $arrMsg = $dtbServer->getMessage();
+  if(!$this->dtbLink->Exec($dsSql)){
+      $arrMsg = $this->dtbLink->getMessage();
     }else{
       $arrMsg = ["dsMsg"=>"ok"];
     }
@@ -91,15 +100,17 @@ class TbSala{
   }
 
   public function Delete($objTbSala){
-    $dtbServer = new DtbServer();
+    if($this->dtbLink == null){
+      $this->dtbLink = new DtbServer();
+    }
 
     $dsSql = "DELETE FROM 
                 shtreinamento.tbsala
               WHERE
                 idsala = " . $objTbSala->Get("idsala") . ";";
     
-  if(!$dtbServer->Exec($dsSql)){
-      $arrMsg = $dtbServer->getMessage();
+  if(!$this->dtbLink->Exec($dsSql)){
+      $arrMsg = $this->dtbLink->getMessage();
     }else{
       $arrMsg = ["dsMsg"=>"ok"];
     }

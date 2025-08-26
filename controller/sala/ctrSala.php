@@ -3,9 +3,11 @@
 require_once "../../lib/libUtils.php";
 require_once "../../lib/libDatabase.php";
 require_once "../../model/mdlTbSala.php";
+require_once "../../model/mdlTbReserva.php";
 
 $objTbSala = new TbSala();
 $objMsg = new Message();
+$objTbReserva = new TbReserva();
 
 //------------------------------------------------------------------------------------------//
 //Ação de Abertura da Tela de Consulta
@@ -130,12 +132,34 @@ if(isset($_GET["action"]) && $_GET["action"] == "gravar"){
 if(isset($_GET["action"]) && $_GET["action"] == "excluir"){
 
   $objTbSala = TbSala::LoadByIdSala($_POST["idSala"]);
+  $aroTbReserva = TbReserva::ListByCondicao(" AND idsala=". $objTbSala->Get("idsala"), "");
+
+  $dtbLink = new DtbServer();
+  $dtbLink->Begin();
+
+  if(is_array($aroTbReserva)){
+    foreach($aroTbReserva as $key => $objTbReserva){
+      $objTbReserva->SetDtbLink($dtbLink);
+
+      $arrResult = $objTbReserva->Delete($objTbReserva);
+
+      if($arrResult["dsMsg"] != "ok"){
+        $dtbLink->Rollback();
+        $objMsg->LoadMessage($arrResult);
+        exit;
+      }
+    }
+  }
+
+  $objTbSala->SetDtbLink($dtbLink);
   $arrResult = $objTbSala->Delete($objTbSala);
 
   if($arrResult["dsMsg"] == "ok"){
     $objMsg->Succes("ntf", "Registro excluido com sucesso");
+    $dtbLink->Commit();
   }else{
     $objMsg->LoadMessage($arrResult);
+    $dtbLink->Rollback();
     $objTbSala = new TbSala();
   }
 }

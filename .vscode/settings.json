@@ -1,4 +1,5 @@
 {
 	"intelephense.environment.phpVersion": "5.6.0",
-	"intelephense.diagnostics.enable": false
+	"intelephense.diagnostics.enable": false,
+	"git.ignoreLimitWarning": true
 }

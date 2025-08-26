@@ -105,6 +105,19 @@
 					type: "buttonGroup",
 					buttons: [
 						{
+							id: "BtnAcessoRapido",
+							spriteCssClass: "k-pg-icon k-i-l2-c10",
+							text: "Acesso Rapido <span class='k-icon k-i-arrow-s' style='width:12px'></span>",
+							group: "actions",
+							enable: false,
+							attributes: { tabindex: "34" }
+						}
+					]
+				},
+				{
+					type: "buttonGroup",
+					buttons: [
+						{
 							id: "BtnSelecionar",
 							spriteCssClass: "k-pg-icon k-i-l9-c4",
 							text: "Selecionar",
@@ -244,6 +257,7 @@
 			},
 			change: function () {
 				$("#frmConsultaColaborador #BarAcoes").data("kendoToolBar").enable("#BtnEditar");
+				$("#frmConsultaColaborador #BarAcoes").data("kendoToolBar").enable("#BtnAcessoRapido");
 				if("<?php echo $frmResult?>" != ""){
 					$("#frmConsultaColaborador #BarAcoes").data("kendoToolBar").enable("#BtnSelecionar")
 				}
@@ -268,9 +282,31 @@
 			}
 		});
 		$("#frmConsultaColaborador #GrdConsultaColaborador").on("dblclick", "tbody>tr", function(){
-			$("#frmConsultaColaborador #BtnEditar").click();
+			if("<?=$frmResult?>" != ""){
+				$("#frmConsultaColaborador #BtnSelecionar").click();
+			}else{
+				$("#frmConsultaColaborador #BtnEditar").click();
+			}
 		})
 		//----------------------------------------------------------------------------------------------------------------//
+
+		if($("#menuAcessoRapidoColaborador").data("kendoContextMenu")){
+			$("#menuAcessoRapidoColaborador").data("kendoContextMenu").destroy()
+		}
+
+		$("#frmConsultaColaborador #menuAcessoRapidoColaborador").kendoContextMenu({
+			target: "#frmConsultaColaborador #BtnAcessoRapido",
+			alignToAnchor: true,
+			showOn: "click",
+			select: function(e){
+				var GrdConsultaColaborador = $("#frmConsultaColaborador #GrdConsultaColaborador").data("kendoGrid");
+				var RstColaborador = GrdConsultaColaborador.dataItem(GrdConsultaColaborador.select());
+
+				if(e.item.id == "BtnColaborador"){
+					OpenWindow(false, "ConsultaReserva", "controller/reserva/ctrReserva.php?action=winConsulta&idColaborador=" + RstColaborador.idcolaboradorsala , "Janela Consulta Reserva")
+				}
+			}
+		})
 
 		//----------------------------------------------------------------------------------------------------------------//
 		//Ação para abrir a tela de consulta
@@ -327,6 +363,10 @@
 			</div>
 			<div id="splMiddle">
 				<div id="GrdConsultaColaborador" data-use-state-screen="true">
+
+				<ul id="menuAcessoRapidoColaborador">
+					<li id="BtnColaborador"><span class="k-pg-icon k-i-l4-c2"></span>&nbsp;Colaboradores</li>
+				</ul>
 
 				</div>
 			</div>

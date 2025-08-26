@@ -7,6 +7,7 @@ class TbReserva{
   private $dtdata;
   private $hrinicio;
   private $hrfim;
+  private $dtbLink;
 
   public function __construct(){
     $this->idreserva = "";
@@ -19,6 +20,10 @@ class TbReserva{
 
   public function Set($prpTbReserva, $valTbReserva){
     $this->$prpTbReserva = $valTbReserva;
+  }
+
+  public function SetDtbLink($dtbLink){
+    $this->dtbLink = $dtbLink;
   }
 
   public function Get($prpTbReserva){
@@ -65,7 +70,9 @@ class TbReserva{
   }
 
   public function Insert($objTbReserva){
-    $dtbServer = new DtbServer();
+    if($this->dtbLink == null){
+      $this->dtbLink = new DtbServer();
+    }
     $fmt = new Format();
 
     $dsSql = "INSERT INTO
@@ -81,13 +88,13 @@ class TbReserva{
                 (SELECT NEXTVAL('shtreinamento.sqidreserva')),
                 ".$fmt->escSqlQuotes($objTbReserva->Get("idsala")).",
                 ".$fmt->escSqlQuotes($objTbReserva->Get("idcolaboradorsala")).",
-                '".$fmt->data($objTbReserva->Get("dtdata"))."',
-                ".$fmt->TimeBd($objTbReserva->Get("hrinicio")).",
-                ".$fmt->TimeBd($objTbReserva->Get("hrfim"))."
+                '".$objTbReserva->Get("dtdata")."',
+                '".$objTbReserva->Get("hrinicio")."',
+                '".$objTbReserva->Get("hrfim")."'
               );";
 
-    if(!$dtbServer->Exec($dsSql)){
-      $arrMsg = $dtbServer->getMessage();
+    if(!$this->dtbLink->Exec($dsSql)){
+      $arrMsg = $this->dtbLink->getMessage();
     }else{
       $arrMsg = ["dsMsg"=>"ok"];
     }
@@ -96,8 +103,9 @@ class TbReserva{
   }
 
   public function Update($objTbReserva){
-    $dtbServer = new DtbServer();
-    $fmt = new Format();
+    if($this->dtbLink == null){
+      $this->dtbLink = new DtbServer();
+    }
 
     $dsSql = "UPDATE
                 shtreinamento.tbreserva
@@ -105,14 +113,14 @@ class TbReserva{
                 idreserva = ".$objTbReserva->Get("idreserva").",
                 idsala = ".$objTbReserva->Get("idsala").",
                 idcolaboradorsala = ".$objTbReserva->Get("idcolaboradorsala").",
-                dtdata = ".$fmt->data($objTbReserva->Get("dtdata")).",
-                hrinicio = ".$fmt->TimeBd($objTbReserva->Get("hrinicio")).",
-                hrfim = ".$fmt->TimeBd($objTbReserva->Get("hrfim"))."
+                dtdata = ".$objTbReserva->Get("dtdata").",
+                hrinicio = ".$objTbReserva->Get("hrinicio").",
+                hrfim = ".$objTbReserva->Get("hrfim")."
               WHERE
                 idreserva = ".$objTbReserva->Get("idreserva").";";
 
-    if(!$dtbServer->Exec($dsSql)){
-      $arrMsg = $dtbServer->getMessage();
+    if(!$this->dtbLink->Exec($dsSql)){
+      $arrMsg = $this->dtbLink->getMessage();
     }else{
       $arrMsg = ["dsMsg"=>"ok"];
     }
@@ -121,15 +129,17 @@ class TbReserva{
   }
 
   public function Delete($objTbReserva){
-    $dtbServer = new DtbServer();
+    if($this->dtbLink == null){
+      $this->dtbLink = new DtbServer();
+    }
 
     $dsSql = "DELETE FROM
                 shtreinamento.tbreserva
               WHERE
                 idreserva = ".$objTbReserva->Get("idreserva").";";
 
-    if(!$dtbServer->Exec($dsSql)){
-      $arrMsg = $dtbServer->getMessage();
+    if(!$this->dtbLink->Exec($dsSql)){
+      $arrMsg = $this->dtbLink->getMessage();
     }else{
       $arrMsg = ["dsMsg"=>"ok"];
     }
@@ -166,7 +176,7 @@ class TbReserva{
               FROM
                 shtreinamento.tbreserva
               WHERE
-                1 = 1";
+                1 = 1 ";
 
     if($strCondicao){
       $dsSql .= $strCondicao;

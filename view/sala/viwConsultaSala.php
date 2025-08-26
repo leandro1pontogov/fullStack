@@ -320,7 +320,11 @@
 			}
 		});
 		$("#frmConsultaSala #GrdConsultaSala").on("dblclick", "tbody>tr", function(){
-			$("#frmConsultaSala #BtnEditar").click();
+			if("<?=$frmResult?>" != ""){
+				$("#frmConsultaSala #BtnSelecionar").click();
+			}else{
+				$("#frmConsultaSala #BtnEditar").click();
+			}
 		})
 		//----------------------------------------------------------------------------------------------------------------//
 
@@ -337,7 +341,6 @@
 				var RstSala = GrdConsultaSala.dataItem(GrdConsultaSala.select());
 
 				if(e.item.id == "BtnSala"){
-					//OpenWindow(false, "ConsultaReserva&idSala=" + RstSala.idsala + "&flAcessoRapido=S&")
 					OpenWindow(false, "ConsultaReserva", "controller/reserva/ctrReserva.php?action=winConsulta&idSala=" + RstSala.idsala , "Janela Consulta Reserva")
 				}
 			}

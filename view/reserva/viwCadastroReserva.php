@@ -4,9 +4,36 @@
     //-----------------------------------------------------------------------------------------//
     //Instanciando os campos da tela de cadastro
     //-----------------------------------------------------------------------------------------//
-    $("#dtData").kendoDatePicker();
-    $("#hrInicio").kendoTimePicker();
-    $("#hrFim").kendoTimePicker();
+    $("#dtData").kendoDatePicker(
+      {
+        format: "dd/MM/yyyy"
+      }
+    );
+    $("#dtData").kendoMaskedTextBox({
+      mask: "00/00/0000"
+    })
+    $("#hrInicio").kendoTimePicker({
+      format: "HH:mm:ss"
+    });
+    $("#hrInicio").kendoMaskedTextBox({
+      mask: "00:10:10",
+      rules: {
+        "0": /[0-9#]/,
+        "1": /[0-5#]/,
+      }
+    })
+    $("#hrFim").kendoTimePicker(
+      {
+        format: "HH:mm:ss"
+      }
+    );
+    $("#hrFim").kendoMaskedTextBox({
+      mask: "00:10:10",
+      rules: {
+        "0": /[0-9#]/,
+        "1": /[0-5#]/,
+      }
+    })
     $("#frmCadastroReserva #BtnSala").kendoButton(
       {
         spriteCssClass: "k-pg-icon k-i-l1-c2",
@@ -56,7 +83,7 @@
         $("#frmCadastroReserva #idSala").val('')
       }
     })
-     //Montando o Autocomplete do Campo de Nome Sala
+     //Montando o Autocomplete do Campo de Nome Colaborador
     $("#frmCadastroReserva #nmColaborador").kendoAutoComplete({
       dataTextField: "nmcolaboradorsala",
       minLenght: 2,
@@ -76,17 +103,17 @@
           data: "data",
           model: {
             fields: {
-              idsala: { field: "idcolaboradorsala", type: "number" },
-              nmsala: { field: "nmcolaboradorsala", type: "string" }
+              idcolaboradorsala: { field: "idcolaboradorsala", type: "number" },
+              nmcolaboradorsala: { field: "nmcolaboradorsala", type: "string" }
             }
           }
         }
       },
       select: function(e){
-        $("#frmCadastroReserva #idSala").val(this.dataItem(e.item.index()).idsala);
+        $("#frmCadastroReserva #idColaborador").val(this.dataItem(e.item.index()).idcolaboradorsala);
       },
       filtering: function(e){
-        $("#frmCadastroReserva #idSala").val('')
+        $("#frmCadastroReserva #idColaborador").val('')
       }
     })
     

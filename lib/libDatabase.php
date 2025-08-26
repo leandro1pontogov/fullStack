@@ -31,4 +31,16 @@ class DtbServer{
     return pg_fetch_array($this->result); 
   }
 
+  public function Begin(){
+    @pg_query($this->conn, "BEGIN");
+  }
+
+  public function Rollback(){
+    @pg_query($this->conn, "ROLLBACK");
+  }
+
+  public function Commit(){
+    @pg_query($this->conn, "COMMIT");
+  }
+
 }
