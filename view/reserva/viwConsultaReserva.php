@@ -48,12 +48,12 @@
 			{
 				name: "idreserva",
 				type: "integer",
-				label: "Id Reserva",
+				label: "Id",
 				visibleFilter: 'true',
 				orderFilter: '2',
 
 				orderGrid: '1',
-				widthGrid: '70',
+				widthGrid: '150',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
@@ -84,19 +84,19 @@
       {
 				name: "nmsala",
 				type: "string",
-				label: "Nome Sala",
+				label: "Sala",
 				visibleFilter: 'false',
 				orderFilter: '4',
 
 				orderGrid: '3',
-				widthGrid: '70',
+				widthGrid: '365',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '200',
+				widthPreview: '600',
 				positionPreview: '3',
 			},
       {
@@ -120,19 +120,19 @@
       {
 				name: "nmcolaboradorsala",
 				type: "string",
-				label: "Nome Colaborador",
+				label: "Colaborador",
 				visibleFilter: 'false',
 				orderFilter: '4',
 
 				orderGrid: '3',
-				widthGrid: '70',
+				widthGrid: '365',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '200',
+				widthPreview: '600',
 				positionPreview: '5',
 			},
 			{
@@ -143,7 +143,7 @@
 				orderFilter: '5',
 
 				orderGrid: '4',
-
+				widthGrid: '150',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
@@ -161,7 +161,7 @@
 				orderFilter: '6',
 
 				orderGrid: '5',
-				widthGrid: '',
+				widthGrid: '150',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
@@ -179,7 +179,7 @@
 				orderFilter: '8',
 
 				orderGrid: '6',
-				widthGrid: '150',
+				widthGrid: '150px',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
@@ -187,7 +187,8 @@
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
 				widthPreview: '70',
-				positionPreview: '9'
+				positionPreview: '8',
+				togetherPreview: "hrinicio"
 			}
 		]
 

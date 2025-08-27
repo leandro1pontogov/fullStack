@@ -68,14 +68,14 @@
 				orderFilter: '5',
 
 				orderGrid: '4',
-				widthGrid: '200',
+				widthGrid: '100',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '300',
+				widthPreview: '70',
 				positionPreview: '4'
 			},
 			{
@@ -86,14 +86,14 @@
 				orderFilter: '6',
 
 				orderGrid: '5',
-				widthGrid: '150',
+				widthGrid: '250',
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
 
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
-				widthPreview: '70',
+				widthPreview: '600',
 				positionPreview: '7'
 			}
 		]

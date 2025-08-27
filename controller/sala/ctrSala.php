@@ -157,10 +157,10 @@ if(isset($_GET["action"]) && $_GET["action"] == "excluir"){
   if($arrResult["dsMsg"] == "ok"){
     $objMsg->Succes("ntf", "Registro excluido com sucesso");
     $dtbLink->Commit();
+    $objTbSala = new TbSala();
   }else{
     $objMsg->LoadMessage($arrResult);
     $dtbLink->Rollback();
-    $objTbSala = new TbSala();
   }
 }
 //------------------------------------------------------------------------------------------//
